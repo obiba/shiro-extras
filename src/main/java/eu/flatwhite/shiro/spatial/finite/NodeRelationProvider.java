@@ -20,4 +20,10 @@ public class NodeRelationProvider extends SphereRelationProvider {
 	    return Relation.UNRELATED;
 	}
     }
+
+    @Override
+    protected double distanceToOrigin(Spatial s) {
+    	// The distance to the origin is the length of the path
+    	return ((Node)s).getPath().size();
+    }
 }

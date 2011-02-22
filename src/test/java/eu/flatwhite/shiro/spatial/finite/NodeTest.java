@@ -64,6 +64,9 @@ public class NodeTest extends TestCase {
 	// tree is: "/l1"
 	Node l1 = Node.parseString(space, "/l1");
 
+	// tree is: "/l11"
+	Node l11 = Node.parseString(space, "/l11");
+
 	Assert.assertEquals(0.0, space.getOrigin().distance(space.getOrigin()));
 	Assert.assertEquals(0.0,
 		space.getOrigin().distance(l2.getParent().getParent()));
@@ -92,5 +95,13 @@ public class NodeTest extends TestCase {
 	Assert.assertEquals(1.0, l3.distance(l1));
 	Assert.assertEquals(1.0, l1.distance(l2));
 	Assert.assertEquals(1.0, l1.distance(l3));
+	
+	// l11 is not comparable to any other one
+	Assert.assertEquals(Double.NaN, l11.distance(l1));
+	Assert.assertEquals(Double.NaN, l11.distance(l2));
+	Assert.assertEquals(Double.NaN, l11.distance(l3));
+	Assert.assertEquals(Double.NaN, l1.distance(l11));
+	Assert.assertEquals(Double.NaN, l2.distance(l11));
+	Assert.assertEquals(Double.NaN, l3.distance(l11));
     }
 }

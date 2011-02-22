@@ -40,8 +40,8 @@ public class NodeSpace extends AbstractSpace {
 
 	// Append an additional PATH_SEPARATOR to make sure we don't consider 
 	// /a/foo and /a/fo on the same path
-	final String thisPathString = p1.getPathString() + Node.PATH_SEPARATOR;
-	final String thatPathString = p2.getPathString() + Node.PATH_SEPARATOR;
+	final String thisPathString = protectedPathString(p1);
+	final String thatPathString = protectedPathString(p2);
 
 	// both begins with ROOT, so check for inclusion from one side
 	if (thisPathString.startsWith(thatPathString)
@@ -51,5 +51,17 @@ public class NodeSpace extends AbstractSpace {
 	} else {
 	    return Double.NaN;
 	}
+    }
+
+    /**
+     * Returns a Node's path as a string and appends an additional {@code Node#PATH_SEPARATOR} 
+     * to allow prefix comparisons (startsWith)
+     * 
+     * @param node
+     * @return the node's path string always terminated by a path separator
+     */
+    private String protectedPathString(Node node) {
+    	final String pathString = node.getPathString();
+    	return pathString.endsWith(Node.PATH_SEPARATOR) ? pathString : pathString + Node.PATH_SEPARATOR;
     }
 }

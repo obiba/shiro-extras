@@ -12,9 +12,9 @@ package eu.flatwhite.shiro.spatial;
  */
 public class SphereRelationProvider extends AbstractRelationProvider {
     public Relation relate(Spatial s1, Spatial s2) {
-	final double d1 = s1.distance(s1.getSpace().getOrigin());
+	final double d1 = distanceToOrigin(s1);
 
-	final double d2 = s2.distance(s2.getSpace().getOrigin());
+	final double d2 = distanceToOrigin(s2);
 
 	Relation relation;
 
@@ -30,5 +30,16 @@ public class SphereRelationProvider extends AbstractRelationProvider {
 	}
 
 	return relation;
+    }
+
+    /**
+     * Returns the distance of {@code s} to the {@code origin} of its 
+     * {@code Space}
+     * @param s the spatial to compute the distance from the origin
+     * @return the distance of {@code s} from its {@code Space} {@code origin}
+     * @see {@code Space#getOrigin()}
+     */
+    protected double distanceToOrigin(Spatial s) {
+    	return s.distance(s.getSpace().getOrigin());
     }
 }
