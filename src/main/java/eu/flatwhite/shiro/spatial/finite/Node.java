@@ -11,7 +11,7 @@ import eu.flatwhite.shiro.spatial.Space;
 public class Node extends AbstractSpatial {
     private static final long serialVersionUID = 5730382523050068642L;
 
-    private static final String PATH_SEPARATOR = "/";
+    static final String PATH_SEPARATOR = "/";
 
     private final Node parent;
 

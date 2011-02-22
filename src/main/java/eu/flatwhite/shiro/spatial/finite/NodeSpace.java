@@ -38,8 +38,10 @@ public class NodeSpace extends AbstractSpace {
 	// included in 'this'). For nodes lying on different chains, i will say
 	// NaN for now.
 
-	final String thisPathString = p1.getPathString();
-	final String thatPathString = p2.getPathString();
+	// Append an additional PATH_SEPARATOR to make sure we don't consider 
+	// /a/foo and /a/fo on the same path
+	final String thisPathString = p1.getPathString() + Node.PATH_SEPARATOR;
+	final String thatPathString = p2.getPathString() + Node.PATH_SEPARATOR;
 
 	// both begins with ROOT, so check for inclusion from one side
 	if (thisPathString.startsWith(thatPathString)
