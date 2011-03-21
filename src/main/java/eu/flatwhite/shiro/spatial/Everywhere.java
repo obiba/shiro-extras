@@ -8,10 +8,17 @@ package eu.flatwhite.shiro.spatial;
  * 
  * @author philippe.laflamme@gmail.com
  */
-public final class Everywhere extends AbstractSpatial {
+public final class Everywhere implements Spatial {
 
+    private final Space space;
+    
     public Everywhere(Space space) {
-	super(space);
+	this.space = space;
+    }
+    
+    @Override
+    public Space getSpace() {
+        return space;
     }
 
     /**
@@ -19,10 +26,10 @@ public final class Everywhere extends AbstractSpatial {
      * space.
      * <p>
      * This method returns {@code 0} for any {@code Spatial} instance within our
-     * space, otherwise, it delegates to the super implementation.
+     * space, otherwise, it delegates to the space's implementation.
      */
     @Override
     public double distance(Spatial spatial) {
-	return getSpace().isContaining(spatial) ? 0d : super.distance(spatial);
+	return getSpace().isContaining(spatial) ? 0d : getSpace().distance(this, spatial);
     }
 }
