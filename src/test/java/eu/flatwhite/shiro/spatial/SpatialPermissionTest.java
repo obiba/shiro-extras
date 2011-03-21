@@ -204,4 +204,22 @@ public class SpatialPermissionTest extends TestCase {
 	Assert.assertFalse(permission.implies(viewEditPasteAsText));
 	Assert.assertFalse(permission.implies(executeEditPasteAsText));
     }
+    
+    public void testWildcards() {
+
+	// set up the space, a node space (this space is not complete euclidean
+	// space, you can have two points in space
+	// but with non-defined distance, see NodeSpace implementation)
+	SpatialPermissionResolver permissionResolver = new SpatialPermissionResolver(
+		new NodeSpace(), new NodeResolver(), new NodeRelationProvider());
+
+	Permission allPermissions = permissionResolver.resolvePermission("*");
+	Permission allSpacePermissions = permissionResolver.resolvePermission("menu:*");
+
+	Permission viewEdit = permissionResolver
+		.resolvePermission("menu:/edit:view");
+	
+	Assert.assertTrue(allPermissions.implies(viewEdit));
+	Assert.assertTrue(allSpacePermissions.implies(viewEdit));
+    }
 }
