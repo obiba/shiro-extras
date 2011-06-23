@@ -17,6 +17,10 @@ public class Node extends AbstractSpatial {
 
     private final String pathElem;
 
+    private List<Node> cachedPath;
+
+    private String cachedPathString;
+
     // special constructor for ROOT
     protected Node(final Space space) {
 	super(space);
@@ -44,40 +48,45 @@ public class Node extends AbstractSpatial {
     }
 
     public List<Node> getPath() {
-	Node curNode = this;
+	if (this.cachedPath == null) {
+	    Node curNode = this;
 
-	ArrayList<Node> path = new ArrayList<Node>();
+	    ArrayList<Node> path = new ArrayList<Node>();
 
-	while (curNode != null) {
-	    path.add(curNode);
+	    while (curNode != null) {
+		path.add(curNode);
 
-	    curNode = curNode.getParent();
+		curNode = curNode.getParent();
+	    }
+	    Collections.reverse(path);
+	    this.cachedPath = Collections.unmodifiableList(path);
 	}
+	return this.cachedPath;
 
-	Collections.reverse(path);
-
-	return Collections.unmodifiableList(path);
     }
 
     public String getPathString() {
-	List<Node> path = getPath();
+	if (cachedPathString == null) {
+	    List<Node> path = getPath();
 
-	Iterator<Node> pathIter = path.iterator();
+	    Iterator<Node> pathIter = path.iterator();
 
-	// consume root to make assembly simpler
-	pathIter.next();
+	    // consume root to make assembly simpler
+	    pathIter.next();
 
-	StringBuilder sb = new StringBuilder(PATH_SEPARATOR);
+	    StringBuilder sb = new StringBuilder(PATH_SEPARATOR);
 
-	if (pathIter.hasNext()) {
-	    sb.append(pathIter.next().getPathElem());
+	    if (pathIter.hasNext()) {
+		sb.append(pathIter.next().getPathElem());
+	    }
+
+	    for (; pathIter.hasNext();) {
+		sb.append(PATH_SEPARATOR).append(pathIter.next().getPathElem());
+	    }
+
+	    cachedPathString = sb.toString();
 	}
-
-	for (; pathIter.hasNext();) {
-	    sb.append(PATH_SEPARATOR).append(pathIter.next().getPathElem());
-	}
-
-	return sb.toString();
+	return this.cachedPathString;
     }
 
     // ==
