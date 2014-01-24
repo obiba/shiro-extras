@@ -11,7 +11,9 @@ package eu.flatwhite.shiro.spatial;
  * @author cstamas
  */
 public class SphereRelationProvider extends AbstractRelationProvider {
-    public Relation relate(Spatial s1, Spatial s2) {
+  private static final long serialVersionUID = 1628730358857769622L;
+
+  public Relation relate(Spatial s1, Spatial s2) {
 	final double d1 = distanceToOrigin(s1);
 
 	final double d2 = distanceToOrigin(s2);

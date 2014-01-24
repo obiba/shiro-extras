@@ -7,7 +7,9 @@ package eu.flatwhite.shiro.spatial;
  */
 public class Universe extends AbstractSpace {
 
-    @Override
+  private static final long serialVersionUID = 7368822215618582981L;
+
+  @Override
     public Spatial getOrigin() {
 	// yep! the origin of the universe really could be everywhere
 	return new Everywhere(this);

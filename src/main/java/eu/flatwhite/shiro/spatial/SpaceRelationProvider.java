@@ -1,5 +1,7 @@
 package eu.flatwhite.shiro.spatial;
 
+import java.io.Serializable;
+
 /**
  * Strategy for providing {@code RelationProvider} instances for a specific
  * {@code Space} instance. Implementations of this interface are used by
@@ -8,7 +10,7 @@ package eu.flatwhite.shiro.spatial;
  * @see SpatialPermissionResolver
  * @author philippe.laflamme@gmail.com
  */
-public interface SpaceRelationProvider {
+public interface SpaceRelationProvider extends Serializable {
 
     /**
      * Provides the {@code RelationProvider} instance for the given {@code Space}

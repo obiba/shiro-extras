@@ -1,5 +1,7 @@
 package eu.flatwhite.shiro.spatial;
 
+import java.io.Serializable;
+
 /**
  * A strategy to provide relations of two spatial. It is up to implementation
  * how it does. Also, the implementation does not have to use all of the
@@ -10,7 +12,7 @@ package eu.flatwhite.shiro.spatial;
  * 
  * @author cstamas
  */
-public interface RelationProvider {
+public interface RelationProvider extends Serializable {
     /**
      * Returns the relation of two spatial.
      * 

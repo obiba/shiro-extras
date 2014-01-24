@@ -1,5 +1,7 @@
 package eu.flatwhite.shiro.spatial;
 
+import java.io.Serializable;
+
 /**
  * A space defines metric, the distance. Also, it determines what spatial are
  * actually belonging to that space. And it provide it's origin, a special point
@@ -7,7 +9,7 @@ package eu.flatwhite.shiro.spatial;
  * 
  * @author cstamas
  */
-public interface Space {
+public interface Space extends Serializable {
     /**
      * The origin point of the space.
      * 

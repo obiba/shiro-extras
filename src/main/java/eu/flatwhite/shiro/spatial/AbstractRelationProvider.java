@@ -2,7 +2,9 @@ package eu.flatwhite.shiro.spatial;
 
 public abstract class AbstractRelationProvider implements RelationProvider {
 
-    @Override
+  private static final long serialVersionUID = 7483843124188329960L;
+
+  @Override
     public Relation getRelation(Spatial s1, Spatial s2) {
 	// If s1 and s2 don't share a Space, we must project one onto the other
 	if (s1.getSpace().isContaining(s2) == false) {

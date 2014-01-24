@@ -1,9 +1,11 @@
 package eu.flatwhite.shiro.spatial;
 
+import java.io.Serializable;
+
 /**
  * The point in space.
  */
-public interface Spatial {
+public interface Spatial extends Serializable {
     /**
      * Returns the space where this point is defined.
      * 

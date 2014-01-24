@@ -1,6 +1,8 @@
 package eu.flatwhite.shiro.spatial;
 
-public interface RelationProviderResolver {
+import java.io.Serializable;
+
+public interface RelationProviderResolver extends Serializable {
     RelationProvider resolveRelationProvider(Spatial spatial,
 	    String relationProviderString);
 }

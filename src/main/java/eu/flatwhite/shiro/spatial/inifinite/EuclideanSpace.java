@@ -30,7 +30,9 @@ import eu.flatwhite.shiro.spatial.Spatial;
  */
 public class EuclideanSpace extends AbstractSpace {
 
-    private final Point origin;
+  private static final long serialVersionUID = -1644598058774545072L;
+
+  private final Point origin;
 
     private final int dimensions;
 
