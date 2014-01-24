@@ -120,6 +120,12 @@
 
   </repositories>
 
+  <scm>
+    <connection>scm:git:git://github.com/obiba/shiro-extras.git</connection>
+    <developerConnection>scm:git:https://github.com/obiba/shiro-extras.git</developerConnection>
+    <url>https://github.com/obiba/shiro-extras</url>
+  </scm>
+
   <distributionManagement>
 
     <repository>
