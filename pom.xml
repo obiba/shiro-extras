@@ -3,7 +3,7 @@
 
   <groupId>eu.flatwhite.shiro</groupId>
   <artifactId>shiro-extras</artifactId>
-  <version>1.0.2-obiba</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>shiro-extras</name>
@@ -123,7 +123,7 @@
     <connection>scm:git:git://github.com/obiba/shiro-extras.git</connection>
     <developerConnection>scm:git:https://github.com/obiba/shiro-extras.git</developerConnection>
     <url>https://github.com/obiba/shiro-extras</url>
-    <tag>shiro-extras-1.0.2-obiba</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
