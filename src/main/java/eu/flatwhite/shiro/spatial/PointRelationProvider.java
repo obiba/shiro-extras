@@ -9,7 +9,9 @@ package eu.flatwhite.shiro.spatial;
  * @author cstamas
  */
 public class PointRelationProvider extends AbstractRelationProvider {
-    public Relation relate(Spatial s1, Spatial s2) {
+  private static final long serialVersionUID = -151928628801015224L;
+
+  public Relation relate(Spatial s1, Spatial s2) {
 	if (s1.distance(s2) == 0.0) {
 	    return Relation.TOUCHES;
 	} else {

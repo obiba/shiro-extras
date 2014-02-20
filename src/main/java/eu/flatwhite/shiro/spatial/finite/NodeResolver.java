@@ -12,7 +12,9 @@ import eu.flatwhite.shiro.spatial.SpatialResolver;
  */
 public class NodeResolver implements SpatialResolver {
 
-    @Override
+  private static final long serialVersionUID = 6021348876066661151L;
+
+  @Override
     public Spatial resolveSpatial(Space space, String spatialString) {
 	return Node.parseString((NodeSpace) space, spatialString);
     }

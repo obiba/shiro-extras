@@ -14,7 +14,9 @@ import eu.flatwhite.shiro.spatial.SpatialResolver;
  */
 public class PointResolver implements SpatialResolver {
 
-    @Override
+  private static final long serialVersionUID = -8912773268310994305L;
+
+  @Override
     public Spatial resolveSpatial(Space space, String spatialString) {
 	String[] points = spatialString.split(",");
 	EuclideanSpace es = (EuclideanSpace) space;

@@ -4,7 +4,9 @@ import eu.flatwhite.shiro.spatial.AbstractSpatial;
 import eu.flatwhite.shiro.spatial.Space;
 
 public class ArtifactCoordinate extends AbstractSpatial {
-    private final String groupId;
+  private static final long serialVersionUID = -8815208185420573468L;
+
+  private final String groupId;
 
     private final String artifactId;
 

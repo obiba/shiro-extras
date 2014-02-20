@@ -11,7 +11,9 @@ import java.util.Map;
  */
 public final class MapSpaceResolver implements SpaceResolver {
 
-    private final Map<String, Space> nameToSpace = new HashMap<String, Space>();
+  private static final long serialVersionUID = -3973698068485129970L;
+
+  private final Map<String, Space> nameToSpace = new HashMap<String, Space>();
 
     public MapSpaceResolver(Map<String, Space> nameToSpace) {
 	this.nameToSpace.putAll(nameToSpace);

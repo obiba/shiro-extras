@@ -11,7 +11,9 @@ import java.util.Map;
  */
 public final class MapSpatialResolver implements SpatialResolver {
 
-    private final Map<Space, SpatialResolver> spaceToResolver = new HashMap<Space, SpatialResolver>();
+  private static final long serialVersionUID = 4703182672250643435L;
+
+  private final Map<Space, SpatialResolver> spaceToResolver = new HashMap<Space, SpatialResolver>();
 
     public MapSpatialResolver(Map<Space, SpatialResolver> nameToSpace) {
 	this.spaceToResolver.putAll(nameToSpace);

@@ -8,7 +8,9 @@ package eu.flatwhite.shiro.spatial;
  */
 public class SingleSpaceResolver implements SpaceResolver {
 
-    private final Space space;
+  private static final long serialVersionUID = 1532590019351852885L;
+
+  private final Space space;
 
     public SingleSpaceResolver(Space space) {
 	this.space = space;

@@ -13,7 +13,9 @@ import eu.flatwhite.shiro.spatial.Spatial;
  * @author cstamas
  */
 public class NodeSpace extends AbstractSpace {
-    public Node getOrigin() {
+  private static final long serialVersionUID = -4318150961936366069L;
+
+  public Node getOrigin() {
 	return new Node(this);
     }
 

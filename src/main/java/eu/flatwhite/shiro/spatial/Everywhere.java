@@ -10,7 +10,9 @@ package eu.flatwhite.shiro.spatial;
  */
 public final class Everywhere implements Spatial {
 
-    private final Space space;
+  private static final long serialVersionUID = -9056328572693111506L;
+
+  private final Space space;
     
     public Everywhere(Space space) {
 	this.space = space;

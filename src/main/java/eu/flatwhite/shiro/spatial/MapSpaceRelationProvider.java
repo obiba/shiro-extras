@@ -14,7 +14,9 @@ import java.util.Map;
  */
 public class MapSpaceRelationProvider implements SpaceRelationProvider {
 
-    private final Map<Space, RelationProvider> spaceToProvider = new HashMap<Space, RelationProvider>();
+  private static final long serialVersionUID = -7952243347543808986L;
+
+  private final Map<Space, RelationProvider> spaceToProvider = new HashMap<Space, RelationProvider>();
 
     public MapSpaceRelationProvider(Map<Space, RelationProvider> nameToSpace) {
 	this.spaceToProvider.putAll(nameToSpace);

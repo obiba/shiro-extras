@@ -9,21 +9,24 @@ import eu.flatwhite.shiro.spatial.SphereRelationProvider;
  * enforces that the two provided spatial nodes must be comparable. The fact
  * they are both contained in same space is not enough, because how we defined
  * "space" on tree (see NodeSpace class).
- * 
+ *
  * @author cstamas
  */
 public class NodeRelationProvider extends SphereRelationProvider {
-    public Relation getRelation(Spatial s1, Spatial s2) {
-	if (!Double.isNaN(s1.distance(s2))) {
-	    return super.getRelation(s1, s2);
-	} else {
-	    return Relation.UNRELATED;
-	}
-    }
+  private static final long serialVersionUID = 8239612745839096476L;
 
-    @Override
-    protected double distanceToOrigin(Spatial s) {
-    	// The distance to the origin is the length of the path
-    	return ((Node)s).getPath().size();
+  @Override
+  public Relation getRelation(Spatial s1, Spatial s2) {
+    if(!Double.isNaN(s1.distance(s2))) {
+      return super.getRelation(s1, s2);
+    } else {
+      return Relation.UNRELATED;
     }
+  }
+
+  @Override
+  protected double distanceToOrigin(Spatial s) {
+    // The distance to the origin is the length of the path
+    return ((Node) s).getPath().size();
+  }
 }

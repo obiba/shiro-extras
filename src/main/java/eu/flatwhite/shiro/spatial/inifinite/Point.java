@@ -9,7 +9,9 @@ import eu.flatwhite.shiro.spatial.AbstractSpatial;
  */
 public class Point extends AbstractSpatial {
 
-    private final double[] coordinates;
+  private static final long serialVersionUID = -3551429509875895057L;
+
+  private final double[] coordinates;
 
     private transient String toString;
 

@@ -4,7 +4,9 @@ import eu.flatwhite.shiro.spatial.AbstractSpace;
 import eu.flatwhite.shiro.spatial.Spatial;
 
 public class ArtifactSpace extends AbstractSpace {
-    private final ArtifactCoordinate origin = new ArtifactCoordinate(this, "",
+  private static final long serialVersionUID = -1507328742375354347L;
+
+  private final ArtifactCoordinate origin = new ArtifactCoordinate(this, "",
 	    "", "0");
 
     public Spatial getOrigin() {

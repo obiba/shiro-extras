@@ -11,7 +11,9 @@ import eu.flatwhite.shiro.spatial.Spatial;
  */
 public class EnumeratedSpace extends AbstractSpace {
 
-    private final Class<? extends Enum<?>> enumeration;
+  private static final long serialVersionUID = 2854386567267606613L;
+
+  private final Class<? extends Enum<?>> enumeration;
 
     private final int origin;
 

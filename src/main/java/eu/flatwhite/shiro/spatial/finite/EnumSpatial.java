@@ -10,7 +10,9 @@ import eu.flatwhite.shiro.spatial.Space;
  */
 public class EnumSpatial extends AbstractSpatial {
 
-    private final int ordinal;
+  private static final long serialVersionUID = -4678131952869615005L;
+
+  private final int ordinal;
 
     public EnumSpatial(Space space, Enum<?> e) {
 	super(space);

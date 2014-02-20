@@ -3,7 +3,9 @@ package eu.flatwhite.shiro.spatial.maven;
 import eu.flatwhite.utilities.comparison.AlphanumComparator;
 
 public class ArtifactVersionSpace extends ArtifactSpace {
-    private final AlphanumComparator alphanumComparator = new AlphanumComparator();
+  private static final long serialVersionUID = 6368432471184636487L;
+
+  private final AlphanumComparator alphanumComparator = new AlphanumComparator();
 
     @Override
     protected double calculateDistance(ArtifactCoordinate a1,

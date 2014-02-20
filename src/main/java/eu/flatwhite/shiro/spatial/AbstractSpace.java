@@ -2,7 +2,9 @@ package eu.flatwhite.shiro.spatial;
 
 public abstract class AbstractSpace implements Space {
 
-    @Override
+  private static final long serialVersionUID = 186194815671217765L;
+
+  @Override
     public Spatial project(Spatial spatial) {
 	return null;
     }

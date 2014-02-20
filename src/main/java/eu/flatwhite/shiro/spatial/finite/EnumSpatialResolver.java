@@ -14,7 +14,9 @@ import eu.flatwhite.shiro.spatial.SpatialResolver;
  */
 public class EnumSpatialResolver implements SpatialResolver {
 
-    private final Class<? extends Enum<?>> enumeration;
+  private static final long serialVersionUID = 92689884867877393L;
+
+  private final Class<? extends Enum<?>> enumeration;
 
     public EnumSpatialResolver(Class<? extends Enum<?>> enumeration) {
 	this.enumeration = enumeration;

@@ -176,7 +176,9 @@ public class SpatialPermissionResolver implements PermissionResolver,
     private static final class ConstantRelationProvider implements
 	    RelationProvider {
 
-	private final Relation relation;
+      private static final long serialVersionUID = 8089591049209572984L;
+
+      private final Relation relation;
 
 	ConstantRelationProvider(Relation relation) {
 	    this.relation = relation;

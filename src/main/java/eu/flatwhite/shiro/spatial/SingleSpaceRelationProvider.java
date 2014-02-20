@@ -10,7 +10,9 @@ package eu.flatwhite.shiro.spatial;
  */
 public class SingleSpaceRelationProvider implements SpaceRelationProvider {
 
-    private final RelationProvider relationProvider;
+  private static final long serialVersionUID = 8253018690989583284L;
+
+  private final RelationProvider relationProvider;
 
     public SingleSpaceRelationProvider(RelationProvider relationProvider) {
 	this.relationProvider = relationProvider;
