@@ -3,32 +3,32 @@
 
   <groupId>eu.flatwhite.shiro</groupId>
   <artifactId>shiro-extras</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>shiro-extras</name>
   <url>https://github.com/cstamas/shiro-extras</url>
 
   <properties>
-    <maven.compiler.target>1.6</maven.compiler.target>
-    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <slf4j.version>1.6.1</slf4j.version>
-  </properties>
+    <junit.version>4.12</junit.version>
+    <shiro.version>1.4.0</shiro.version>
+    <slf4j.version>1.7.12</slf4j.version>
 
-  <licenses>
-    <license>
-      <name>GPLv3</name>
-      <url>http://www.gnu.org/licenses/gpl.txt</url>
-    </license>
-  </licenses>
+    <!-- maven plugins -->
+    <maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
+    <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
+    <maven-source-plugin.version>2.2</maven-source-plugin.version>
+  </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-core</artifactId>
-      <version>1.2.2</version>
+      <version>${shiro.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -60,31 +60,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.1.1</version>
+        <version>${maven-source-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>attach-test-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>test-jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
-        <executions>
-          <execution>
-            <id>attach-javadoc</id>
             <phase>verify</phase>
             <goals>
               <goal>jar</goal>
@@ -94,89 +73,122 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.4.1</version>
+        <version>${maven-release-plugin.version}</version>
         <configuration>
-          <releaseProfiles>ci-build,release</releaseProfiles>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
         </configuration>
       </plugin>
     </plugins>
   </build>
 
-  <repositories>
 
+  <repositories>
     <repository>
-      <id>obiba.org</id>
-      <name>Obiba Maven 2.x Repository</name>
-      <url>http://repo.obiba.org/repo</url>
+      <id>obiba-releases</id>
+      <name>Obiba Maven Releases Repository</name>
+      <url>https://dl.bintray.com/obiba/maven</url>
       <releases>
         <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>obiba-snapshots</id>
+      <name>Obiba Maven Snapshots Repository</name>
+      <url>https://obiba.jfrog.io/obiba/libs-snapshot</url>
+      <releases>
+        <enabled>false</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
     </repository>
-
   </repositories>
 
+  <distributionManagement>
+    <repository>
+      <id>obiba-bintray</id>
+      <url>https://api.bintray.com/obiba/maven/</url>
+    </repository>
+    <snapshotRepository>
+      <id>obiba-artifactory</id>
+      <url>https://obiba.jfrog.io/obiba/libs-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <scm>
-    <connection>scm:git:git://github.com/obiba/shiro-extras.git</connection>
+    <connection>scm:git:https://github.com/obiba/shiro-extras.git</connection>
     <developerConnection>scm:git:https://github.com/obiba/shiro-extras.git</developerConnection>
     <url>https://github.com/obiba/shiro-extras</url>
     <tag>HEAD</tag>
   </scm>
 
-  <distributionManagement>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/obiba/shiro-extras/issues</url>
+  </issueManagement>
 
-    <repository>
-      <id>obiba-releases</id>
-      <url>http://repo.obiba.org/libs-release-local</url>
-    </repository>
+  <ciManagement>
+    <system>Travis</system>
+    <url>https://travis-ci.org/obiba/shiro-extras</url>
+  </ciManagement>
 
-    <snapshotRepository>
-      <id>obiba-snapshots</id>
-      <url>http://repo.obiba.org/libs-snapshot-local</url>
-    </snapshotRepository>
-
-  </distributionManagement>
+  <mailingLists>
+    <mailingList>
+      <name>OBiBa Users</name>
+      <post>obiba-users@googlegroups.com</post>
+      <archive>https://groups.google.com/forum/?fromgroups#!forum/obiba-users</archive>
+    </mailingList>
+  </mailingLists>
 
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
+          <!-- Disable default deployer. -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>html-aggregate-javadocs</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>aggregate</goal>
-                </goals>
-                <configuration>
-                  <reportOutputDirectory>${obiba.docs.url}/${project.artifactId}</reportOutputDirectory>
-                  <destDir>${project.version}</destDir>
-                </configuration>
-              </execution>
-              <execution>
-                <id>jar-javadocs</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>jar</goal>
-                  <goal>aggregate-jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <!-- Deploy javadoc and sources: explicitly define maven-deploy-plugin after other to force exec order -->
             <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+
+          <!-- Enable alternative deployer. -->
+          <plugin>
+            <groupId>com.carrotgarden.maven</groupId>
+            <artifactId>bintray-maven-plugin</artifactId>
+            <configuration>
+              <skip>false</skip>
+              <subject>obiba</subject>
+              <repository>maven</repository>
+              <serverId>obiba-bintray</serverId>
+              <packageVcsUrl>https://github.com/obiba/shiro-extras</packageVcsUrl>
+              <performCleanup>false</performCleanup>
+            </configuration>
             <executions>
+              <!-- Activate "bintray:deploy" during "deploy" -->
               <execution>
-                <id>deploy</id>
-                <phase>deploy</phase>
                 <goals>
                   <goal>deploy</goal>
                 </goals>
