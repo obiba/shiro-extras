@@ -139,7 +139,7 @@
     <connection>scm:git:https://github.com/obiba/shiro-extras.git</connection>
     <developerConnection>scm:git:https://github.com/obiba/shiro-extras.git</developerConnection>
     <url>https://github.com/obiba/shiro-extras</url>
-    <tag>HEAD</tag>
+    <tag>shiro-extras-1.1.x</tag>
   </scm>
 
   <issueManagement>
