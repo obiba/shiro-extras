@@ -20,3 +20,4 @@ target/
 # Other
 .svn/
 bin/
+.idea/

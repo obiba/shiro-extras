@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.InvalidPermissionStringException;
@@ -30,7 +30,8 @@ import eu.flatwhite.shiro.spatial.funnycorp.Person.Gender;
 import eu.flatwhite.shiro.spatial.inifinite.Point;
 import eu.flatwhite.shiro.spatial.inifinite.PointResolver;
 
-public class FunnyCorpTest extends TestCase {
+public class FunnyCorpTest {
+	@Test
     public void testFunnyCorp() {
 	// There is the "FunnyCorp LTD", that has some employees.
 	// One day, CEO made a strange decision, and made it written that:
@@ -128,6 +129,7 @@ public class FunnyCorpTest extends TestCase {
 	check(false, beerSpatialPermission, linda, beerPermission);
     }
 
+	@Test
     public void testFunnyCorpFromStrings() {
 	final PersonSpace personSpace = new PersonSpace();
 

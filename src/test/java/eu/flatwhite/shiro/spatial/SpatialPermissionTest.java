@@ -2,8 +2,8 @@ package eu.flatwhite.shiro.spatial;
 
 import java.util.HashMap;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.WildcardPermission;
@@ -15,7 +15,8 @@ import eu.flatwhite.shiro.spatial.finite.NodeSpace;
 import eu.flatwhite.shiro.spatial.inifinite.EuclideanSpace;
 import eu.flatwhite.shiro.spatial.inifinite.Point;
 
-public class SpatialPermissionTest extends TestCase {
+public class SpatialPermissionTest {
+	@Test
     public void testSphere() {
 	// set up the 3d euclidean space
 	EuclideanSpace space = new EuclideanSpace(3);
@@ -77,6 +78,7 @@ public class SpatialPermissionTest extends TestCase {
 	Assert.assertFalse(permission.implies(wrong3));
     }
 
+	@Test
     public void testPhilippe() {
 	// set up the space, a node space (this space is not complete euclidean
 	// space, you can have two points in space
@@ -157,6 +159,7 @@ public class SpatialPermissionTest extends TestCase {
 	Assert.assertFalse(permission.implies(executeEditPasteAsText));
     }
 
+	@Test
     public void testPhilippeNodeParsing() {
 
 	// set up the space, a node space (this space is not complete euclidean
@@ -205,6 +208,7 @@ public class SpatialPermissionTest extends TestCase {
 	Assert.assertFalse(permission.implies(executeEditPasteAsText));
     }
     
+	@Test
     public void testWildcards() {
 
 	// set up the space, a node space (this space is not complete euclidean

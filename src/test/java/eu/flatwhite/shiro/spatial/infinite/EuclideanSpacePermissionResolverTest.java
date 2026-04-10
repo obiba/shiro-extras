@@ -2,7 +2,8 @@ package eu.flatwhite.shiro.spatial.infinite;
 
 import java.util.Random;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 import org.apache.shiro.authz.Permission;
 
@@ -11,8 +12,9 @@ import eu.flatwhite.shiro.spatial.SphereRelationProvider;
 import eu.flatwhite.shiro.spatial.inifinite.EuclideanSpace;
 import eu.flatwhite.shiro.spatial.inifinite.PointResolver;
 
-public class EuclideanSpacePermissionResolverTest extends TestCase {
+public class EuclideanSpacePermissionResolverTest {
 
+	@Test
     public void test1D() {
 	SpatialPermissionResolver permissionResolver = new SpatialPermissionResolver(
 		new EuclideanSpace(1), new PointResolver(),
@@ -27,7 +29,7 @@ public class EuclideanSpacePermissionResolverTest extends TestCase {
 	    Double belowOrEqualToTen = r.nextDouble() * 10;
 	    Permission addSomethingBelowTen = permissionResolver
 		    .resolvePermission("onedee:" + belowOrEqualToTen + ":add");
-	    super.assertTrue(addThingsBelowTen.implies(addSomethingBelowTen));
+	    Assert.assertTrue(addThingsBelowTen.implies(addSomethingBelowTen));
 	}
 
     }

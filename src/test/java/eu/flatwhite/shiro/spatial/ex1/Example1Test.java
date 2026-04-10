@@ -3,14 +3,17 @@ package eu.flatwhite.shiro.spatial.ex1;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.config.IniSecurityManagerFactory;
+import org.apache.shiro.config.Ini;
+import org.apache.shiro.config.ogdl.ReflectionBuilder;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
 
 import eu.flatwhite.shiro.spatial.ex1.domain.Person;
@@ -18,9 +21,7 @@ import eu.flatwhite.shiro.spatial.ex1.domain.Person.Gender;
 import eu.flatwhite.shiro.spatial.ex1.domain.PersonDao;
 import eu.flatwhite.shiro.spatial.ex1.domain.PersonRoleDao;
 
-public class Example1Test extends TestCase {
-
-    protected IniSecurityManagerFactory config;
+public class Example1Test {
 
     protected SecurityManager securityManager;
 
@@ -28,19 +29,21 @@ public class Example1Test extends TestCase {
 
     protected PersonRoleDao personRoleDao;
 
-    protected void setUp() throws Exception {
-	super.setUp();
+	@Before
+	public void setUp() throws Exception {
 
-	config = new IniSecurityManagerFactory(
-		"classpath:shiro-ex1-classic.ini");
+	Ini ini = Ini.fromResourcePath("classpath:shiro-ex1-classic.ini");
+	ReflectionBuilder builder = new ReflectionBuilder();
+	builder.buildObjects(ini.getSection("main"));
 
-	securityManager = config.getInstance();
+	Realm realm = builder.getBean("personRealm", Realm.class);
+	securityManager = new DefaultSecurityManager(realm);
 
 	SecurityUtils.setSecurityManager(securityManager);
 
-	personDao = (PersonDao) config.getBeans().get("personDao");
+	personDao = builder.getBean("personDao", PersonDao.class);
 
-	personRoleDao = (PersonRoleDao) config.getBeans().get("personRoleDao");
+	personRoleDao = builder.getBean("personRoleDao", PersonRoleDao.class);
     }
 
     protected void applyManagerDecrete() {
@@ -102,7 +105,7 @@ public class Example1Test extends TestCase {
 		    canIHaveBeer(subject));
 
 	    return true;
-	} catch (AssertionFailedError e) {
+	} catch (AssertionError e) {
 	    return false;
 	}
     }
@@ -127,7 +130,8 @@ public class Example1Test extends TestCase {
 	return failedPersons;
     }
 
-    public void testClassic() {
+	@Test
+	public void testClassic() {
 	// add employees to our "DB" (PersonDao), virgin, without any roles
 	// given yet
 	personDao.add(new Person("jvanzyl", "woohoo", "Jason Van Zyl",

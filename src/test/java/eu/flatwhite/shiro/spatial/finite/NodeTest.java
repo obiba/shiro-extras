@@ -1,17 +1,19 @@
 package eu.flatwhite.shiro.spatial.finite;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class NodeTest extends TestCase {
+public class NodeTest {
     protected NodeSpace space;
 
-    protected void setUp() throws Exception {
-	super.setUp();
+	@Before
+	public void setUp() throws Exception {
 
 	this.space = new NodeSpace();
     }
 
+	@Test
     public void testSimple() {
 	// tree is: "/some/other"
 	Node other = Node.parseString(space, "/some/other");
@@ -26,6 +28,7 @@ public class NodeTest extends TestCase {
 		other1.getPathString());
     }
 
+	@Test
     public void testRobustnessParse() {
 	Node n;
 
@@ -54,6 +57,7 @@ public class NodeTest extends TestCase {
 	Assert.assertEquals("/foo/bar", n.getPathString());
     }
 
+	@Test
     public void testSpatial() {
 	// tree is: "/l1/l2"
 	Node l2 = Node.parseString(space, "/l1/l2");
@@ -67,41 +71,41 @@ public class NodeTest extends TestCase {
 	// tree is: "/l11"
 	Node l11 = Node.parseString(space, "/l11");
 
-	Assert.assertEquals(0.0, space.getOrigin().distance(space.getOrigin()));
+	Assert.assertEquals(0.0, space.getOrigin().distance(space.getOrigin()), 0.0);
 	Assert.assertEquals(0.0,
-		space.getOrigin().distance(l2.getParent().getParent()));
+		space.getOrigin().distance(l2.getParent().getParent()), 0.0);
 	Assert.assertEquals(0.0,
-		l2.getParent().getParent().distance(space.getOrigin()));
-	Assert.assertEquals(1.0, space.getOrigin().distance(l2.getParent()));
-	Assert.assertEquals(1.0, l2.getParent().distance(space.getOrigin()));
-	Assert.assertEquals(2.0, space.getOrigin().distance(l2));
-	Assert.assertEquals(2.0, l2.distance(space.getOrigin()));
-	Assert.assertEquals(1.0, l2.distance(l2.getParent()));
-	Assert.assertEquals(1.0, l2.getParent().distance(l2));
+		l2.getParent().getParent().distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(1.0, space.getOrigin().distance(l2.getParent()), 0.0);
+	Assert.assertEquals(1.0, l2.getParent().distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(2.0, space.getOrigin().distance(l2), 0.0);
+	Assert.assertEquals(2.0, l2.distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(1.0, l2.distance(l2.getParent()), 0.0);
+	Assert.assertEquals(1.0, l2.getParent().distance(l2), 0.0);
 
-	Assert.assertEquals(0.0, space.getOrigin().distance(space.getOrigin()));
-	Assert.assertEquals(1.0, l1.distance(space.getOrigin()));
-	Assert.assertEquals(1.0, l2.getParent().distance(space.getOrigin()));
-	Assert.assertEquals(1.0, l3.getParent().distance(space.getOrigin()));
-	Assert.assertEquals(2.0, l2.distance(space.getOrigin()));
-	Assert.assertEquals(2.0, l3.distance(space.getOrigin()));
+	Assert.assertEquals(0.0, space.getOrigin().distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(1.0, l1.distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(1.0, l2.getParent().distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(1.0, l3.getParent().distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(2.0, l2.distance(space.getOrigin()), 0.0);
+	Assert.assertEquals(2.0, l3.distance(space.getOrigin()), 0.0);
 
 	// l2 and l3 are non-comparable as we defined "distance" on Tree
-	Assert.assertEquals(Double.NaN, l2.distance(l3));
-	Assert.assertEquals(Double.NaN, l3.distance(l2));
+	Assert.assertEquals(Double.NaN, l2.distance(l3), 0.0);
+	Assert.assertEquals(Double.NaN, l3.distance(l2), 0.0);
 
 	// l1 is comparable with both l2 and l3
-	Assert.assertEquals(1.0, l2.distance(l1));
-	Assert.assertEquals(1.0, l3.distance(l1));
-	Assert.assertEquals(1.0, l1.distance(l2));
-	Assert.assertEquals(1.0, l1.distance(l3));
-	
+	Assert.assertEquals(1.0, l2.distance(l1), 0.0);
+	Assert.assertEquals(1.0, l3.distance(l1), 0.0);
+	Assert.assertEquals(1.0, l1.distance(l2), 0.0);
+	Assert.assertEquals(1.0, l1.distance(l3), 0.0);
+
 	// l11 is not comparable to any other one
-	Assert.assertEquals(Double.NaN, l11.distance(l1));
-	Assert.assertEquals(Double.NaN, l11.distance(l2));
-	Assert.assertEquals(Double.NaN, l11.distance(l3));
-	Assert.assertEquals(Double.NaN, l1.distance(l11));
-	Assert.assertEquals(Double.NaN, l2.distance(l11));
-	Assert.assertEquals(Double.NaN, l3.distance(l11));
+	Assert.assertEquals(Double.NaN, l11.distance(l1), 0.0);
+	Assert.assertEquals(Double.NaN, l11.distance(l2), 0.0);
+	Assert.assertEquals(Double.NaN, l11.distance(l3), 0.0);
+	Assert.assertEquals(Double.NaN, l1.distance(l11), 0.0);
+	Assert.assertEquals(Double.NaN, l2.distance(l11), 0.0);
+	Assert.assertEquals(Double.NaN, l3.distance(l11), 0.0);
     }
 }

@@ -3,10 +3,11 @@ package eu.flatwhite.shiro.spatial.maven;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class MavenArtifactVersionSpaceTest extends TestCase {
+public class MavenArtifactVersionSpaceTest {
+	@Test
     public void testSimple() {
 	// set up space
 	ArtifactVersionSpace space = new ArtifactVersionSpace();
@@ -24,8 +25,8 @@ public class MavenArtifactVersionSpaceTest extends TestCase {
 	ArtifactCoordinate v1_1 = new ArtifactCoordinate(space,
 		"eu.flatwhite.shiro", "shiro-extras", "1.1");
 
-	Assert.assertEquals(0.0, v1_0.distance(v1_0));
-	Assert.assertEquals(0.0, v1_0.distance(v1_0));
+	Assert.assertEquals(0.0, v1_0.distance(v1_0), 0.0);
+	Assert.assertEquals(0.0, v1_0.distance(v1_0), 0.0);
 
 	ArrayList<ArtifactCoordinate> coordinates = new ArrayList<ArtifactCoordinate>();
 	coordinates.add(v1_0_beta);
