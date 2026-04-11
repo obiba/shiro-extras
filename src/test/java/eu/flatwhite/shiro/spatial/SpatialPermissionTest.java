@@ -226,4 +226,54 @@ public class SpatialPermissionTest {
 	Assert.assertTrue(allPermissions.implies(viewEdit));
 	Assert.assertTrue(allSpacePermissions.implies(viewEdit));
     }
+
+    @Test
+    public void testWildcardNodePermission() {
+	SpatialPermissionResolver permissionResolver = new SpatialPermissionResolver(
+		new NodeSpace(), new NodeResolver(), new NodeRelationProvider());
+
+	// Grant: GET on any project's tables (single-segment wildcard)
+	Permission grantAllProjectTables = permissionResolver
+		.resolvePermission("rest:/project/*/tables:GET");
+
+	// Should be implied: exact match with different concrete project names
+	Permission getAlphaTables = permissionResolver
+		.resolvePermission("rest:/project/alpha/tables:GET");
+	Permission getBetaTables = permissionResolver
+		.resolvePermission("rest:/project/beta/tables:GET");
+	Assert.assertTrue(grantAllProjectTables.implies(getAlphaTables));
+	Assert.assertTrue(grantAllProjectTables.implies(getBetaTables));
+
+	// Should NOT be implied: different leaf segment (columns vs tables)
+	Permission getAlphaColumns = permissionResolver
+		.resolvePermission("rest:/project/alpha/columns:GET");
+	Assert.assertFalse(grantAllProjectTables.implies(getAlphaColumns));
+
+	// Should NOT be implied: different HTTP verb
+	Permission postAlphaTables = permissionResolver
+		.resolvePermission("rest:/project/alpha/tables:POST");
+	Assert.assertFalse(grantAllProjectTables.implies(postAlphaTables));
+
+	// Should NOT be implied: deeper path (wildcard is single-segment only)
+	Permission getNestedTables = permissionResolver
+		.resolvePermission("rest:/project/alpha/beta/tables:GET");
+	Assert.assertFalse(grantAllProjectTables.implies(getNestedTables));
+
+	// Wildcard at same depth: /project/* TOUCHES /project/alpha and /project/beta
+	Permission grantProjectWildcard = permissionResolver
+		.resolvePermission("rest:/project/*:GET");
+	Permission getAlpha = permissionResolver
+		.resolvePermission("rest:/project/alpha:GET");
+	Assert.assertTrue(grantProjectWildcard.implies(getAlpha));
+
+	// Sibling project is still implied (different concrete name under /project/*)
+	Permission getBeta = permissionResolver
+		.resolvePermission("rest:/project/beta:GET");
+	Assert.assertTrue(grantProjectWildcard.implies(getBeta));
+
+	// Completely unrelated path is not implied
+	Permission getOther = permissionResolver
+		.resolvePermission("rest:/other/alpha:GET");
+	Assert.assertFalse(grantProjectWildcard.implies(getOther));
+    }
 }
