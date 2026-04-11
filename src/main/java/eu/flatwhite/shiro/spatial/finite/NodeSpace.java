@@ -1,5 +1,7 @@
 package eu.flatwhite.shiro.spatial.finite;
 
+import java.util.List;
+
 import eu.flatwhite.shiro.spatial.AbstractSpace;
 import eu.flatwhite.shiro.spatial.Spatial;
 
@@ -26,44 +28,42 @@ public class NodeSpace extends AbstractSpace {
     @Override
     protected double calculateDistance(Spatial s1, Spatial s2) {
 	Node p1 = (Node) s1;
-
 	Node p2 = (Node) s2;
 
-	// I am going the "easy" way ;)
-	// not this
-	// http://www.topcoder.com/tc?module=Static&d1=tutorials&d2=lowestCommonAncestor
+	List<Node> path1 = p1.getPath();
+	List<Node> path2 = p2.getPath();
 
-	// so, my assumption is, that this and spatial should be on same chain
-	// (chain := a list of nodes from root
-	// to the node of Node having longer path, meaning, either 'this' is
-	// included in spatial, or spatial is
-	// included in 'this'). For nodes lying on different chains, i will say
-	// NaN for now.
+	// Identify which path is shorter (potential prefix / ancestor).
+	// When lengths are equal both are candidates; we just pick path1 as shorter.
+	List<Node> shorter = path1.size() <= path2.size() ? path1 : path2;
+	List<Node> longer  = path1.size() <= path2.size() ? path2 : path1;
 
-	// Append an additional PATH_SEPARATOR to make sure we don't consider 
-	// /a/foo and /a/fo on the same path
-	final String thisPathString = protectedPathString(p1);
-	final String thatPathString = protectedPathString(p2);
-
-	// both begins with ROOT, so check for inclusion from one side
-	if (thisPathString.startsWith(thatPathString)
-		|| thatPathString.startsWith(thisPathString)) {
-	    // this path includes spatial path
-	    return Math.abs(p1.getPath().size() - p2.getPath().size());
+	// Nodes must lie on the same chain (shorter must be a wildcard-aware
+	// prefix of longer). For nodes on different chains return NaN.
+	if (isWildcardPrefix(shorter, longer)) {
+	    return Math.abs(path1.size() - path2.size());
 	} else {
 	    return Double.NaN;
 	}
     }
 
     /**
-     * Returns a Node's path as a string and appends an additional {@code Node#PATH_SEPARATOR} 
-     * to allow prefix comparisons (startsWith)
-     * 
-     * @param node
-     * @return the node's path string always terminated by a path separator
+     * Returns {@code true} when {@code prefix} is a segment-wise prefix of
+     * {@code path}, where a segment equal to {@code "*"} in either list matches
+     * any single segment in the other list (including another {@code "*"}).
+     *
+     * @param prefix the shorter (or equal-length) path
+     * @param path   the longer (or equal-length) path
+     * @return {@code true} if {@code prefix} is a wildcard-aware prefix of {@code path}
      */
-    private String protectedPathString(Node node) {
-    	final String pathString = node.getPathString();
-    	return pathString.endsWith(Node.PATH_SEPARATOR) ? pathString : pathString + Node.PATH_SEPARATOR;
+    private boolean isWildcardPrefix(List<Node> prefix, List<Node> path) {
+	for (int i = 0; i < prefix.size(); i++) {
+	    String seg1 = prefix.get(i).getPathElem();
+	    String seg2 = path.get(i).getPathElem();
+	    if (!"*".equals(seg1) && !"*".equals(seg2) && !seg1.equals(seg2)) {
+		return false;
+	    }
+	}
+	return true;
     }
 }

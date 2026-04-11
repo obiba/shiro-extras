@@ -108,4 +108,48 @@ public class NodeTest {
 	Assert.assertEquals(Double.NaN, l2.distance(l11), 0.0);
 	Assert.assertEquals(Double.NaN, l3.distance(l11), 0.0);
     }
+
+    @Test
+    public void testWildcardDistance() {
+	// /project/*/tables vs /project/alpha/tables → same depth → TOUCHES (distance 0)
+	Node wildcardTables  = Node.parseString(space, "/project/*/tables");
+	Node alphaTables     = Node.parseString(space, "/project/alpha/tables");
+	Assert.assertEquals(0.0, wildcardTables.distance(alphaTables), 0.0);
+	Assert.assertEquals(0.0, alphaTables.distance(wildcardTables), 0.0);
+
+	// /project/beta/tables also matches
+	Node betaTables = Node.parseString(space, "/project/beta/tables");
+	Assert.assertEquals(0.0, wildcardTables.distance(betaTables), 0.0);
+
+	// /project/* and /project/alpha are at the same depth → TOUCHES (distance 0)
+	Node wildcardProject = Node.parseString(space, "/project/*");
+	Node alpha           = Node.parseString(space, "/project/alpha");
+	Assert.assertEquals(0.0, wildcardProject.distance(alpha), 0.0);
+	Assert.assertEquals(0.0, alpha.distance(wildcardProject), 0.0);
+
+	// /project/* is shallower than /project/alpha/tables → distance 1 (OUTSIDE)
+	Assert.assertEquals(1.0, wildcardProject.distance(alphaTables), 0.0);
+	Assert.assertEquals(1.0, alphaTables.distance(wildcardProject), 0.0);
+
+	// different leaf segment → NaN (unrelated chains)
+	Node alphaColumns = Node.parseString(space, "/project/alpha/columns");
+	Assert.assertEquals(Double.NaN, wildcardTables.distance(alphaColumns), 0.0);
+	Assert.assertEquals(Double.NaN, alphaColumns.distance(wildcardTables), 0.0);
+
+	// different depth → NaN (/project/*/tables cannot be ancestor of /project/alpha/beta/tables)
+	Node deepTables = Node.parseString(space, "/project/alpha/beta/tables");
+	Assert.assertEquals(Double.NaN, wildcardTables.distance(deepTables), 0.0);
+	Assert.assertEquals(Double.NaN, deepTables.distance(wildcardTables), 0.0);
+
+	// wildcard matches wildcard (/* vs /anything → distance 0)
+	Node starTop    = Node.parseString(space, "/*");
+	Node anything   = Node.parseString(space, "/anything");
+	Assert.assertEquals(0.0, starTop.distance(anything), 0.0);
+	Assert.assertEquals(0.0, anything.distance(starTop), 0.0);
+
+	// two wildcards at same depth touch each other
+	Node wild1 = Node.parseString(space, "/project/*/tables");
+	Node wild2 = Node.parseString(space, "/project/*/tables");
+	Assert.assertEquals(0.0, wild1.distance(wild2), 0.0);
+    }
 }
